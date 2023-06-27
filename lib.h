@@ -5,6 +5,7 @@
 #include <stdlib.h>
 
 void _puts(const char *str);
+void _puts_fd(const char *str, int fd);
 size_t _strlen(const char *str);
 size_t _strclen(const char *str, char c);
 char *_substr(const char *s, int start, int len);

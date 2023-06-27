@@ -11,7 +11,8 @@ char *_readline(const char *prompt)
 	ssize_t	result;
 	size_t	size;
 
-	_puts(prompt);
+	if (prompt != NULL)
+		_puts(prompt);
 	line = NULL;
 	result = getline(&line, &size, stdin);
 	if (result == -1)

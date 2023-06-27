@@ -1,16 +1,6 @@
 #include "main.h"
 
 /**
- * is_seperator - check if token is a command seperator
- * @type: token type to check
- * Return: true or false
-*/
-bool is_seperator(token_type_t type)
-{
-	return (type == T_AND || type == T_OR || type == T_SEMICOLON);
-}
-
-/**
  * prepare_env_entry - create key=value entry
  * @env: env entry
  * Return: allocated string or NULL
@@ -85,7 +75,7 @@ const node_t *create_argv(const node_t *head, char ***argv, int *argc)
 	while (it != NULL)
 	{
 		token = it->data;
-		if (is_seperator(token->type))
+		if (is_token_seperator(token->type))
 			break;
 		_argc += 1;
 		it = it->next;
@@ -98,7 +88,7 @@ const node_t *create_argv(const node_t *head, char ***argv, int *argc)
 	while (it != NULL)
 	{
 		token = it->data;
-		if (is_seperator(token->type))
+		if (is_token_seperator(token->type))
 			break;
 		_argv[_argc] = token->value;
 		_argc += 1;
@@ -121,15 +111,22 @@ void execute_list(shell_t *shell, const list_t *commands)
 	int argc;
 	char **env;
 	const node_t *it;
+	int execute_result;
 
+	argv = NULL;
 	env = create_env(shell);
 	it = commands->head;
 	while (1)
 	{
 		it = create_argv(it, &argv, &argc);
 		if (argc > 0)
-			execute(shell, argv, env);
+		{
+			execute_result = execute(shell, argv, env);
+			if (execute_result != 0)
+				perror("./shell");
+		}
 		free(argv);
+		argv = NULL;
 		if (it == NULL)
 			break;
 		it = it->next;

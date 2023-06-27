@@ -28,7 +28,7 @@ typedef struct env_s
 
 /**
  * struct shell_s - shell globals
- * @last_exit_code: last executed command exit code
+ * @last_command_status: last executed command status
  * @envs: array of envs variales
  *
  * Description: contains all globals needed by the shell
@@ -36,7 +36,7 @@ typedef struct env_s
 
 typedef struct shell_s
 {
-	int last_exit_code;
+	int last_command_status;
 	list_t *envs;
 } shell_t;
 

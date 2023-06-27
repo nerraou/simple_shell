@@ -84,6 +84,8 @@ int recognize_word(list_t *tokens, const char *str)
 	len = 0;
 	while (str[len] != '\0' && str[len] != ' ')
 	{
+		if (str[len] == ';')
+			break;
 		if (str[len] == '|' && str[len + 1] == '|')
 			break;
 		if (str[len] == '&' && str[len + 1] == '&')

@@ -30,5 +30,6 @@ token_t *token_new(char *value, token_type_t type);
 void token_del(token_t *token);
 list_t *tokenize(const char *str);
 list_t *parse_line(const char *line);
+bool is_token_seperator(token_type_t type);
 
 #endif /* PARSER_H */

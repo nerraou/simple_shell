@@ -10,8 +10,9 @@
 int execute(shell_t *shell, char **argv, char **env)
 {
 	pid_t pid;
-	int status;
 
+	if (access(argv[0], F_OK | X_OK) == -1)
+		return (-1);
 	pid = fork();
 	if (pid == -1)
 		return (-1);
@@ -20,8 +21,6 @@ int execute(shell_t *shell, char **argv, char **env)
 		execve(argv[0], argv, env);
 		exit(1);
 	}
-	wait(&status);
-	if (WIFEXITED(status))
-		shell->last_exit_code = WEXITSTATUS(status);
+	wait(&shell->last_command_status);
 	return (0);
 }
