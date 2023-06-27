@@ -118,7 +118,7 @@ bool execute_builtin(shell_t *shell, list_t *tokens, int argc,
 {
 	builtin_t builtins[BUILTINS_COUNT] = {
 		{"exit", bi_exit},
-		/* {"cd", bi_cd}, */
+		{"env", bi_env},
 	};
 	int i;
 

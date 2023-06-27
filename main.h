@@ -12,7 +12,7 @@
 #include "list.h"
 #include "parser.h"
 
-#define BUILTINS_COUNT 1
+#define BUILTINS_COUNT 2
 
 typedef int (*builtin_function_t)();
 
@@ -72,5 +72,6 @@ void env_del(env_t *env);
 char *_getenv(const list_t *envs, const char *name);
 
 int bi_exit(int ac, char **av, char **env, shell_t *shell, list_t *tokens);
+int bi_env(int ac, char **av, char **env);
 
 #endif /* MAIN_H */
