@@ -15,7 +15,7 @@ int main(int ac, char *av[], char *env[])
 
 	if (shell_init(&shell, env) == -1)
 		exit(1);
-	repl(&shell);
+	eval(&shell);
 	/* clear env list */
 	return (0);
 }

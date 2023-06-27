@@ -42,7 +42,7 @@ typedef struct shell_s
 
 int shell_init(shell_t *shell, char *env[]);
 char *_readline(const char *prompt);
-void repl(shell_t *shell);
+void eval(shell_t *shell);
 
 int execute(shell_t *shell, char **argv, char **env);
 void execute_list(shell_t *shell, const list_t *commands);

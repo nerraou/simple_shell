@@ -1,20 +1,22 @@
 #include "main.h"
 
 /**
- * repl -  read eval print loop
+ * eval -  evaluate commands input
  * @shell: shell data
 */
-void repl(shell_t *shell)
+void eval(shell_t *shell)
 {
 	char *line;
+	char *prompt_string;
 	list_t *commands;
 
-	(void)commands;
-	(void)shell;
-
+	if (isatty(0))
+		prompt_string = "$> ";
+	else
+		prompt_string = NULL;
 	while (1)
 	{
-		line = _readline("$> ");
+		line = _readline(prompt_string);
 		if (line == NULL)
 			break;
 		commands = parse_line(line);
