@@ -26,6 +26,6 @@ int bi_exit(int ac, char **av, char **env, shell_t *shell, list_t *tokens)
 	list_del(tokens, token_del);
 	free(av);
 	free_grid(env);
-	exit(exit_code);
+	exit(exit_code & 255);
 	return (0);
 }
