@@ -20,6 +20,7 @@ void eval(shell_t *shell)
 		if (line == NULL)
 			break;
 		commands = parse_line(line);
+		free(line);
 		if (commands != NULL)
 		{
 			execute_list(shell, commands);

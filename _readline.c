@@ -7,17 +7,13 @@
  */
 char *_readline(const char *prompt)
 {
-	char	*line;
-	ssize_t	result;
-	size_t	size;
+	char *line;
+	int	result;
 
 	if (prompt != NULL)
 		_puts(prompt);
-	line = NULL;
-	result = getline(&line, &size, stdin);
-	if (result == -1)
+	result = _getline(STDIN_FILENO, &line);
+	if (result <= 0)
 		return (NULL);
-	if (line[result - 1] == '\n')
-		line[result - 1] = '\0';
 	return (line);
 }
