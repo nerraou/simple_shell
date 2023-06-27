@@ -62,14 +62,14 @@ int shell_init(shell_t *shell, char *env[]);
 char *_readline(const char *prompt);
 void eval(shell_t *shell);
 
-int execute(shell_t *shell, int argc, char **argv, char **env);
-void execute_list(shell_t *shell, const list_t *commands);
+int execute(shell_t *shell, char **argv, char **env);
+void execute_list(shell_t *shell, list_t *commands);
 void free_grid(char **grid);
 
 env_t *env_parse(const char *str);
 list_t	*env_init(char *env_arr[]);
 void env_del(env_t *env);
 
-int bi_exit(int ac, char **av, const shell_t *shell);
+int bi_exit(int ac, char **av, char **env, shell_t *shell, list_t *tokens);
 
 #endif /* MAIN_H */

@@ -101,17 +101,45 @@ const node_t *create_argv(const node_t *head, char ***argv, int *argc)
 }
 
 /**
+ * execute_builtin - execute simple command
+ *@shell: shell data
+ *@tokens: tokens list
+ *@argc: command arguments count
+ *@argv: command arguments value
+ *@env: envs
+ * Return: 0 on success or -1 on failure
+ */
+bool execute_builtin(shell_t *shell, list_t *tokens, int argc,
+	char **argv, char **env)
+{
+	builtin_t builtins[BUILTINS_COUNT] = {
+		{"exit", bi_exit},
+		/* {"cd", bi_cd}, */
+	};
+	int i;
+
+	for (i = 0; i < 1; i++)
+	{
+		if (_strcmp(argv[0], builtins[i].name) == 0)
+			break;
+	}
+	if (i == BUILTINS_COUNT)
+		return (false);
+	shell->last_exit_code = builtins[i].action(argc, argv, env, shell, tokens);
+	return (true);
+}
+
+/**
  * execute_list - execute list of commands
  * @shell: shell data
  * @commands: commands list
 */
-void execute_list(shell_t *shell, const list_t *commands)
+void execute_list(shell_t *shell, list_t *commands)
 {
 	char **argv;
 	int argc;
 	char **env;
 	const node_t *it;
-	int execute_result;
 
 	argv = NULL;
 	env = create_env(shell);
@@ -121,9 +149,11 @@ void execute_list(shell_t *shell, const list_t *commands)
 		it = create_argv(it, &argv, &argc);
 		if (argc > 0)
 		{
-			execute_result = execute(shell, argc, argv, env);
-			if (execute_result != 0)
-				perror("./shell");
+			if (execute_builtin(shell, commands, argc, argv, env) == false)
+			{
+				if (execute(shell, argv, env) != 0)
+					perror("./shell");
+			}
 		}
 		free(argv);
 		argv = NULL;
