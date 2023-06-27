@@ -69,6 +69,7 @@ void free_grid(char **grid);
 env_t *env_parse(const char *str);
 list_t	*env_init(char *env_arr[]);
 void env_del(env_t *env);
+char *_getenv(const list_t *envs, const char *name);
 
 int bi_exit(int ac, char **av, char **env, shell_t *shell, list_t *tokens);
 

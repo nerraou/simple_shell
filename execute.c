@@ -1,6 +1,46 @@
 #include "main.h"
 
 /**
+ * resolve_bin_path - resolve binary path
+ * @shell: shell data
+ * @bin: binary base path
+ * Return: 0: on success, -1: on error
+*/
+int resolve_bin_path(const shell_t *shell, char **bin)
+{
+	char *path;
+	char **paths;
+	char *bin_path;
+	int i;
+
+	if (**bin == '.' || **bin == '/')
+		return (access(*bin, F_OK | X_OK));
+	path = _getenv(shell->envs, "PATH");
+	if (path == NULL)
+		return (access(*bin, F_OK | X_OK));
+	paths = strtow(path, ':');
+	for (i = 0; paths[i] != NULL; i++)
+	{
+		bin_path = strjoin(paths[i], "/");
+		if (bin_path == NULL)
+			break;
+		bin_path = join_and_free(bin_path, *bin);
+		if (bin_path == NULL)
+			break;
+		if (access(bin_path, F_OK | X_OK) == 0)
+		{
+			free_grid(paths);
+			free(*bin);
+			*bin = bin_path;
+			return (0);
+		}
+		free(bin_path);
+	}
+	free_grid(paths);
+	return (-1);
+}
+
+/**
  * execute - execute simple command
  *@shell: shell data
  *@argv: command arguments value
@@ -11,7 +51,7 @@ int execute(shell_t *shell, char **argv, char **env)
 {
 	pid_t pid;
 
-	if (access(argv[0], F_OK | X_OK) == -1)
+	if (resolve_bin_path(shell, argv) == -1)
 		return (-1);
 	pid = fork();
 	if (pid == -1)

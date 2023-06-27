@@ -68,7 +68,6 @@ const node_t *create_argv(const node_t *head, char ***argv, int *argc)
 	token_t *token;
 
 	_argc = 0;
-	*argc = 0;
 	if (head == NULL)
 		return (NULL);
 	it = head;
@@ -90,7 +89,12 @@ const node_t *create_argv(const node_t *head, char ***argv, int *argc)
 		token = it->data;
 		if (is_token_seperator(token->type))
 			break;
-		_argv[_argc] = token->value;
+		_argv[_argc] = _strdup(token->value);
+		if (_argv[_argc] == NULL)
+		{
+			free_grid(_argv);
+			return (NULL);
+		}
 		_argc += 1;
 		it = it->next;
 	}
@@ -141,11 +145,12 @@ void execute_list(shell_t *shell, list_t *commands)
 	char **env;
 	const node_t *it;
 
-	argv = NULL;
 	env = create_env(shell);
 	it = commands->head;
 	while (1)
 	{
+		argc = 0;
+		argv = NULL;
 		it = create_argv(it, &argv, &argc);
 		if (argc > 0)
 		{
@@ -155,7 +160,7 @@ void execute_list(shell_t *shell, list_t *commands)
 					perror("./shell");
 			}
 		}
-		free(argv);
+		free_grid(argv);
 		argv = NULL;
 		if (it == NULL)
 			break;
