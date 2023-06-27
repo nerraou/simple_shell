@@ -1,29 +1,21 @@
 #include "main.h"
-#include "lib.h"
 
 /**
  * main - check the code
- *
+ * @ac: arguments count
+ * @av: arguments value
+ * @env: env variables
  * Return: Always 0.
  */
-
-int main(void)
+int main(int ac, char *av[], char *env[])
 {
-	char *line;
-	ssize_t result;
-	size_t size;
-	pid_t pid;
+	shell_t shell;
+	(void)ac;
+	(void)av;
 
-	while (1)
-	{
-		line = NULL;
-		result = getline(&line, &size, stdin);
-		// remove trailing newline if existed
-		_puts("command to be executed");
-		_puts(line);
-		_puts("\n");
-		free(line);
-	}
-
-	return 0;
+	if (shell_init(&shell, env) == -1)
+		exit(1);
+	repl(&shell);
+	/* clear env list */
+	return (0);
 }
