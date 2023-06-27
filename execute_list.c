@@ -121,7 +121,7 @@ void execute_list(shell_t *shell, const list_t *commands)
 		it = create_argv(it, &argv, &argc);
 		if (argc > 0)
 		{
-			execute_result = execute(shell, argv, env);
+			execute_result = execute(shell, argc, argv, env);
 			if (execute_result != 0)
 				perror("./shell");
 		}

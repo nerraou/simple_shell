@@ -9,6 +9,7 @@
 int shell_init(shell_t *shell, char *env[])
 {
 	shell->last_command_status = 0;
+	shell->last_exit_code = 0;
 	shell->envs = env_init(env);
 	if (shell->envs == NULL)
 		return (-1);
