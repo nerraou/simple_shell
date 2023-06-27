@@ -19,5 +19,6 @@ char *_strcpy(char *dest, const char *src);
 int _strcmp(const char *s1, const char *s2);
 char *strjoin(const char *s1, const char *s2);
 int _getline(int fd, char **line);
+bool _isspace(char c);
 
 #endif /* LIB_H */
