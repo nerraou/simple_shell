@@ -120,6 +120,7 @@ bool execute_builtin(shell_t *shell, list_t *tokens, int argc,
 		{"exit", bi_exit},
 		{"env", bi_env},
 		{"unsetenv", bi_unsetenv},
+		{"setenv", bi_setenv},
 	};
 	int i;
 
@@ -146,12 +147,12 @@ void execute_list(shell_t *shell, list_t *commands)
 	char **env;
 	const node_t *it;
 
-	env = create_env(shell);
 	it = commands->head;
 	while (1)
 	{
 		argc = 0;
 		argv = NULL;
+		env = create_env(shell);
 		it = create_argv(it, &argv, &argc);
 		if (argc > 0)
 		{
@@ -162,10 +163,10 @@ void execute_list(shell_t *shell, list_t *commands)
 			}
 		}
 		free_grid(argv);
+		free_grid(env);
 		argv = NULL;
 		if (it == NULL)
 			break;
 		it = it->next;
 	}
-	free_grid(env);
 }

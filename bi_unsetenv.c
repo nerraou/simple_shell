@@ -32,6 +32,6 @@ int bi_unsetenv(int ac, char **av, char **env, shell_t *shell)
 		}
 		it = it->next;
 		i++;
-	}	
+	}
 	return (0);
 }

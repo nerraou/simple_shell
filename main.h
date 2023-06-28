@@ -12,7 +12,7 @@
 #include "list.h"
 #include "parser.h"
 
-#define BUILTINS_COUNT 3
+#define BUILTINS_COUNT 4
 
 typedef int (*builtin_function_t)();
 
@@ -66,6 +66,7 @@ int execute(shell_t *shell, char **argv, char **env);
 void execute_list(shell_t *shell, list_t *commands);
 void free_grid(char **grid);
 
+env_t *env_new(const char *key, const char *value);
 env_t *env_parse(const char *str);
 list_t	*env_init(char *env_arr[]);
 void env_del(env_t *env);
@@ -74,5 +75,6 @@ char *_getenv(const list_t *envs, const char *name);
 int bi_exit(int ac, char **av, char **env, shell_t *shell, list_t *tokens);
 int bi_env(int ac, char **av, char **env);
 int bi_unsetenv(int ac, char **av, char **env, shell_t *shell);
+int bi_setenv(int ac, char **av, char **env, shell_t *shell);
 
 #endif /* MAIN_H */

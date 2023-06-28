@@ -22,5 +22,8 @@ char *strjoin(const char *s1, const char *s2);
 int _getline(int fd, char **line);
 bool _isspace(char c);
 char *join_and_free(char *s1, const char *s2);
+bool _isalpha(char c);
+bool _isalnum(char c);
+bool _isdigit(char c);
 
 #endif /* LIB_H */
