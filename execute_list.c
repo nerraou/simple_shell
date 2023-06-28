@@ -119,10 +119,11 @@ bool execute_builtin(shell_t *shell, list_t *tokens, int argc,
 	builtin_t builtins[BUILTINS_COUNT] = {
 		{"exit", bi_exit},
 		{"env", bi_env},
+		{"unsetenv", bi_unsetenv},
 	};
 	int i;
 
-	for (i = 0; i < 1; i++)
+	for (i = 0; i < BUILTINS_COUNT; i++)
 	{
 		if (_strcmp(argv[0], builtins[i].name) == 0)
 			break;

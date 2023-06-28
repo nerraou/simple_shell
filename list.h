@@ -38,5 +38,6 @@ node_t *node_new(void *data);
 bool list_push_back(list_t *list, void *data);
 void list_clear(list_t *list, void (*del)());
 void list_del(list_t *list, void (*del)());
+void list_remove_at(list_t *list, size_t index, void (*del)());
 
 #endif /* LIST_H */
