@@ -4,9 +4,9 @@
  * _getenv - get env by name
  * @envs: envs list
  * @name: variable name
- * Return: env value or NULL
+ * Return: env entry or NULL
 */
-char *_getenv(const list_t *envs, const char *name)
+env_t *_getenv(const list_t *envs, const char *name)
 {
 	node_t *it;
 	env_t *env_entry;
@@ -16,7 +16,7 @@ char *_getenv(const list_t *envs, const char *name)
 	{
 		env_entry = it->data;
 		if (_strcmp(env_entry->key, name) == 0)
-			return (env_entry->value);
+			return (env_entry);
 		it = it->next;
 	}
 	return (NULL);

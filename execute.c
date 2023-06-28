@@ -8,17 +8,17 @@
 */
 int resolve_bin_path(const shell_t *shell, char **bin)
 {
-	char *path;
+	env_t *path_env;
 	char **paths;
 	char *bin_path;
 	int i;
 
 	if (**bin == '.' || **bin == '/')
 		return (access(*bin, F_OK | X_OK));
-	path = _getenv(shell->envs, "PATH");
-	if (path == NULL)
+	path_env = _getenv(shell->envs, "PATH");
+	if (path_env == NULL)
 		return (access(*bin, F_OK | X_OK));
-	paths = strtow(path, ':');
+	paths = strtow(path_env->value, ':');
 	for (i = 0; paths[i] != NULL; i++)
 	{
 		bin_path = strjoin(paths[i], "/");
