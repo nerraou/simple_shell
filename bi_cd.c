@@ -45,25 +45,19 @@ char *get_path(int ac, char **av, const list_t *envs)
 	{
 		env_entry = _getenv(envs, "HOME");
 		if (env_entry == NULL)
-		{
-			_puts_fd("./shell: cd: HOME not set\n", 2);
 			return (NULL);
-		}
 		path = env_entry->value;
-		return (path);
+		return (_strdup(path));
 	}
 	path = av[1];
 	if (_strcmp(path, "-") == 0)
 	{
 		env_entry = _getenv(envs, "OLDPWD");
 		if (env_entry == NULL)
-		{
-			_puts_fd("./shell: cd: OLDPWD not set\n", 2);
 			return (NULL);
-		}
 		path = env_entry->value;
 	}
-	return (path);
+	return (_strdup(path));
 }
 
 /**
@@ -77,25 +71,31 @@ char *get_path(int ac, char **av, const list_t *envs)
 int bi_cd(int ac, char **av, char **env, shell_t *shell)
 {
 	char *path;
+	int exit_code;
 	(void)env;
 
 	if (ac > 2)
 	{
-		_puts_fd("./shell: cd: usage: cd DIRECTORY\n", 2);
+		_puts_fd(shell->program_name, 2);
+		_puts_fd(": cd: usage: cd DIRECTORY\n", 2);
 		return (1);
 	}
+	exit_code = 0;
 	path = get_path(ac, av, shell->envs);
 	if (path == NULL)
-		return (1);
+		return (0);
 	if (chdir(path) == -1)
 	{
-		perror("./shell: cd");
-		return (1);
+		_puts_fd(shell->program_name, 2);
+		perror(": cd");
+		exit_code = 2;
 	}
-	if (update_envs(shell->envs) == -1)
+	else if (update_envs(shell->envs) == -1)
 	{
-		_puts_fd("./shell: cd: error\n", 2);
-		return (1);
+		_puts_fd(shell->program_name, 2);
+		_puts_fd(": cd: error\n", 2);
+		exit_code = 2;
 	}
-	return (0);
+	free(path);
+	return (exit_code);
 }
