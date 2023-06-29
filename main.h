@@ -38,6 +38,7 @@ typedef struct env_s
  * @last_command_status: last executed command status
  * @last_exit_code: last executed command exit code
  * @envs: array of envs variales
+ * @program_name: program name
  *
  * Description: contains all globals needed by the shell
  */

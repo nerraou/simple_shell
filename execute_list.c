@@ -160,7 +160,12 @@ void execute_list(shell_t *shell, list_t *commands)
 			if (execute_builtin(shell, commands, argc, argv, env) == false)
 			{
 				if (execute(shell, argv, env) != 0)
-					perror(shell->program_name);
+				{
+					_puts_fd(shell->program_name, 2);
+					_puts_fd(": 1: ", 2);
+					_puts_fd(argv[0], 2);
+					_puts_fd(": not found\n", 2);
+				}
 			}
 		}
 		free_grid(argv);
