@@ -19,6 +19,8 @@ int resolve_bin_path(const shell_t *shell, char **bin)
 	if (path_env == NULL)
 		return (access(*bin, F_OK | X_OK));
 	paths = strtow(path_env->value, ':');
+	if (paths == NULL)
+		return (-1);
 	for (i = 0; paths[i] != NULL; i++)
 	{
 		bin_path = strjoin(paths[i], "/");

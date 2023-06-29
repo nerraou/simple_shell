@@ -55,15 +55,13 @@ char **strtow(const char *str, char c)
 	int start;
 	int length;
 
-	if (!str || str[0] == '\0')
+	if (str == NULL)
 		return (NULL);
 	words = word_count(str, c);
-	if (words == 0)
-		return (NULL);
 	i = 0;
 	start = 0;
 	array = (char **)malloc(sizeof(char *) * (words + 1));
-	if (!array)
+	if (array == NULL)
 		return (NULL);
 	while (i < words)
 	{
