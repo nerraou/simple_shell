@@ -54,7 +54,7 @@ char *get_path(int ac, char **av, const list_t *envs)
 	{
 		env_entry = _getenv(envs, "OLDPWD");
 		if (env_entry == NULL)
-			return (NULL);
+			return (getcwd(NULL, 0));
 		path = env_entry->value;
 	}
 	return (_strdup(path));
@@ -87,7 +87,9 @@ int bi_cd(int ac, char **av, char **env, shell_t *shell)
 	if (chdir(path) == -1)
 	{
 		_puts_fd(shell->program_name, 2);
-		perror(": cd");
+		_puts_fd(": 1: cd: can't cd to ", 2);
+		_puts_fd(path, 2);
+		_puts_fd("\n", 2);
 		exit_code = 2;
 	}
 	else if (update_envs(shell->envs) == -1)
@@ -95,6 +97,11 @@ int bi_cd(int ac, char **av, char **env, shell_t *shell)
 		_puts_fd(shell->program_name, 2);
 		_puts_fd(": cd: error\n", 2);
 		exit_code = 2;
+	}
+	else if (ac == 2 && av[1][0] == '-')
+	{
+		_puts(path);
+		_puts("\n");
 	}
 	free(path);
 	return (exit_code);
