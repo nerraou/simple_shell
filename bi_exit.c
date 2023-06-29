@@ -35,7 +35,7 @@ bool is_int(const char *str)
 void print_exit_error(const char *arg, const char *program_name)
 {
 	_puts_fd(program_name, 2);
-	_puts_fd(": exit: Illegal number: ", 2);
+	_puts_fd(": 1: exit: Illegal number: ", 2);
 	_puts_fd(arg, 2);
 	_puts_fd("\n", 2);
 }
