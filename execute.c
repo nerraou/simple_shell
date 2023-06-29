@@ -59,6 +59,7 @@ int execute(shell_t *shell, char **argv, char **env)
 	if (pid == 0)
 	{
 		execve(argv[0], argv, env);
+		perror(shell->program_name);
 		exit(1);
 	}
 	wait(&shell->last_command_status);
