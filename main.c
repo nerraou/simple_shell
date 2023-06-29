@@ -10,6 +10,7 @@
 int main(int ac, char *av[], char *env[])
 {
 	shell_t shell;
+	int exit_code;
 
 	if (ac > 2)
 	{
@@ -19,7 +20,7 @@ int main(int ac, char *av[], char *env[])
 	}
 	if (shell_init(&shell, env, av[0]) == -1)
 		exit(1);
-	eval(&shell, av[1]);
+	exit_code = eval(&shell, av[1]);
 	list_del(shell.envs, env_del);
-	return (0);
+	return (exit_code);
 }

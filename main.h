@@ -64,7 +64,7 @@ typedef struct builtin_s
 
 int shell_init(shell_t *shell, char *env[], char *program_name);
 char *_readline(const char *prompt, int fd);
-void eval(shell_t *shell, const char *filename);
+int eval(shell_t *shell, const char *filename);
 
 int execute(shell_t *shell, char **argv, char **env);
 void execute_list(shell_t *shell, list_t *commands);

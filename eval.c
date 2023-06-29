@@ -4,8 +4,9 @@
  * eval -  evaluate commands input
  * @shell: shell data
  * @filename: filename
+ * Return: 0: success, 1: error
 */
-void eval(shell_t *shell, const char *filename)
+int eval(shell_t *shell, const char *filename)
 {
 	char *line;
 	char *prompt_string;
@@ -18,7 +19,7 @@ void eval(shell_t *shell, const char *filename)
 	if (fd == -1)
 	{
 		perror(shell->program_name);
-		return;
+		return (2);
 	}
 	if (isatty(fd))
 		prompt_string = "$> ";
@@ -37,4 +38,5 @@ void eval(shell_t *shell, const char *filename)
 			list_del(commands, token_del);
 		}
 	}
+	return (0);
 }
