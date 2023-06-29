@@ -10,12 +10,16 @@
 int main(int ac, char *av[], char *env[])
 {
 	shell_t shell;
-	(void)ac;
-	(void)av;
 
-	if (shell_init(&shell, env) == -1)
+	if (ac > 2)
+	{
+		_puts_fd(av[0], 2);
+		_puts_fd(": usage: ./hsh [filename]\n", 2);
 		exit(1);
-	eval(&shell);
+	}
+	if (shell_init(&shell, env, av[0]) == -1)
+		exit(1);
+	eval(&shell, av[1]);
 	list_del(shell.envs, env_del);
 	return (0);
 }

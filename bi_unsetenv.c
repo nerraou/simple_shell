@@ -17,7 +17,8 @@ int bi_unsetenv(int ac, char **av, char **env, shell_t *shell)
 
 	if (ac != 2)
 	{
-		_puts_fd("./shell: unsetenv: usage: unsetenv VARIABLE\n", 2);
+		_puts_fd(shell->program_name, 2);
+		_puts_fd(": unsetenv: usage: unsetenv VARIABLE\n", 2);
 		return (1);
 	}
 	i = 0;

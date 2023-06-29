@@ -160,7 +160,7 @@ void execute_list(shell_t *shell, list_t *commands)
 			if (execute_builtin(shell, commands, argc, argv, env) == false)
 			{
 				if (execute(shell, argv, env) != 0)
-					perror("./shell");
+					perror(shell->program_name);
 			}
 		}
 		free_grid(argv);

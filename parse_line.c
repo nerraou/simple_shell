@@ -20,9 +20,10 @@ bool expect(const token_t *token, const token_t *next)
 /**
  * parse_line - parse command line
  * @line: command line string
+ * @program_name: program name
  * Return: list of tokens or NULL
 */
-list_t *parse_line(const char *line)
+list_t *parse_line(const char *line, const char *program_name)
 {
 	list_t *tokens;
 	node_t *it;
@@ -38,7 +39,8 @@ list_t *parse_line(const char *line)
 		current_token = it->data;
 		if (is_token_seperator(current_token->type))
 		{
-			_puts_fd("unexpected token\n", 2);
+			_puts_fd(program_name, 2);
+			_puts_fd(": unexpected token\n", 2);
 			list_del(tokens, token_del);
 			return (NULL);
 		}
@@ -51,7 +53,8 @@ list_t *parse_line(const char *line)
 			next_token = it->next->data;
 		if (expect(current_token, next_token) == false)
 		{
-			_puts_fd("unexpected token\n", 2);
+			_puts_fd(program_name, 2);
+			_puts_fd(": unexpected token\n", 2);
 			list_del(tokens, token_del);
 			return (NULL);
 		}

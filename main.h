@@ -7,6 +7,9 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <stdbool.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 #include "lib.h"
 #include "list.h"
@@ -40,6 +43,7 @@ typedef struct env_s
  */
 typedef struct shell_s
 {
+	char *program_name;
 	int last_command_status;
 	int last_exit_code;
 	list_t *envs;
@@ -58,9 +62,9 @@ typedef struct builtin_s
 	builtin_function_t action;
 } builtin_t;
 
-int shell_init(shell_t *shell, char *env[]);
-char *_readline(const char *prompt);
-void eval(shell_t *shell);
+int shell_init(shell_t *shell, char *env[], char *program_name);
+char *_readline(const char *prompt, int fd);
+void eval(shell_t *shell, const char *filename);
 
 int execute(shell_t *shell, char **argv, char **env);
 void execute_list(shell_t *shell, list_t *commands);

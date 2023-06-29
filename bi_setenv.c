@@ -35,12 +35,14 @@ int bi_setenv(int ac, char **av, char **env, shell_t *shell)
 
 	if (ac != 3)
 	{
-		_puts_fd("./shell: setenv: usage: setenv VARIABLE VALUE\n", 2);
+		_puts_fd(shell->program_name, 2);
+		_puts_fd(": setenv: usage: setenv VARIABLE VALUE\n", 2);
 		return (1);
 	}
 	if (is_varname(av[1]) == false)
 	{
-		_puts_fd("./shell: setenv: invalid variable name\n", 2);
+	_puts_fd(shell->program_name, 2);
+		_puts_fd(": setenv: invalid variable name\n", 2);
 		return (1);
 	}
 	return (_setenv(shell->envs, av[1], av[2]));

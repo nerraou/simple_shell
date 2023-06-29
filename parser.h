@@ -29,7 +29,7 @@ typedef int (*recognizer_t)(list_t *tokens, const char *str);
 token_t *token_new(char *value, token_type_t type);
 void token_del(token_t *token);
 list_t *tokenize(const char *str);
-list_t *parse_line(const char *line);
+list_t *parse_line(const char *line, const char *program_name);
 bool is_token_seperator(token_type_t type);
 
 #endif /* PARSER_H */

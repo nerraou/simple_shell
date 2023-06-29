@@ -28,6 +28,19 @@ bool is_int(const char *str)
 }
 
 /**
+ * print_exit_error - print exit error
+ * @arg: argument
+ * @program_name: program name
+*/
+void print_exit_error(const char *arg, const char *program_name)
+{
+	_puts_fd(program_name, 2);
+	_puts_fd(": exit: Illegal number: ", 2);
+	_puts_fd(arg, 2);
+	_puts_fd("\n", 2);
+}
+
+/**
  * bi_exit - builtin exit
  * @ac: arguments count
  * @av: arguments value
@@ -42,20 +55,26 @@ int bi_exit(int ac, char **av, char **env, shell_t *shell, list_t *tokens)
 
 	if (ac > 2)
 	{
-		_puts_fd("./shell: exit: too many arguments\n", 2);
+		_puts_fd(shell->program_name, 2);
+		_puts_fd(": exit: too many arguments\n", 2);
 		return (1);
 	}
 	if (ac == 2)
 	{
 		if (is_int(av[1]) == false)
 		{
-			_puts_fd("./shell: exit: ", 2);
-			_puts_fd(av[1], 2);
-			_puts_fd(": numeric argument required\n", 2);
-			exit_code = 2;
+			print_exit_error(av[1], shell->program_name);
+			return (2);
 		}
 		else
+		{
 			exit_code = _atoi(av[1]);
+			if (exit_code < 0)
+			{
+				print_exit_error(av[1], shell->program_name);
+				return (2);
+			}
+		}
 	}
 	else
 		exit_code = shell->last_exit_code;
