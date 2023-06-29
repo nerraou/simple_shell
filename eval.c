@@ -18,7 +18,10 @@ int eval(shell_t *shell, const char *filename)
 		fd = open(filename, O_RDONLY);
 	if (fd == -1)
 	{
-		perror(shell->program_name);
+		_puts_fd(shell->program_name, 2);
+		_puts_fd(": 0: Can't open ", 2);
+		_puts_fd(filename, 2);
+		_puts_fd("\n", 2);
 		return (2);
 	}
 	if (isatty(fd))
