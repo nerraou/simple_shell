@@ -38,5 +38,7 @@ int eval(shell_t *shell, const char *filename)
 			list_del(commands, token_del);
 		}
 	}
+	if (fd != 0 && fd != -1)
+		close(fd);
 	return (0);
 }
