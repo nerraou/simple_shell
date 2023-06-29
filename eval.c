@@ -40,5 +40,5 @@ int eval(shell_t *shell, const char *filename)
 	}
 	if (fd != 0 && fd != -1)
 		close(fd);
-	return (0);
+	return (shell->last_exit_code);
 }
